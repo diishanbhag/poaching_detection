@@ -95,17 +95,19 @@ The system analyzes aerial/satellite images and outputs a poaching risk score, w
 ```bash
 git clone https://github.com/diishanbhag/poaching_detection.git
 cd poaching_detection
-
-
+```
+### 2. Start kafka and redis
+```bash
 # Start Zookeeper & Kafka
 bin/zookeeper-server-start.sh config/zookeeper.properties
 bin/kafka-server-start.sh config/server.properties
-
 # Start Redis
 redis-server
+```
+### 3. Start the Services
+```bash
 # Terminal 1: Run Producer
 python producer.py
-
 # Terminal 2: Run YOLO Service
 python yolo_service.py --weights vehicle.pt wildfire.pt water.pt
 
@@ -125,6 +127,6 @@ python gnn_service.py
 
 # Terminal 4: Run Dashboard
 python dashboard.py
-
+```
 
 
