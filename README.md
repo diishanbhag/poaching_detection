@@ -75,17 +75,7 @@ The system analyzes aerial/satellite images and outputs a poaching risk score, w
 - Visualizes detections and risk scores.  
 - Provides real-time monitoring for operators.  
 
----
 
-## Training Details
-- **Loss function**: `BCEWithLogitsLoss` (binary classification: poaching vs. non-poaching).  
-- **Evaluation metrics**:  
-  - Accuracy = 0.87  
-  - Precision = 0.82  
-  - Recall = 0.74  
-  - F1 = 0.78  
-  - AUC = 0.85  
-- **Dataset**: 50 manually labeled images (5 poaching, 45 non-poaching).  
 
 ---
 
