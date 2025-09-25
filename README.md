@@ -55,3 +55,76 @@ The system analyzes aerial/satellite images and outputs a poaching risk score, w
     {"class": "water", "conf": 0.88, "x": 0.72, "y": 0.35, "blue_score": 0.21}
   ]
 }
+```
+# GNN Service and Dashboard
+
+## GNN Service
+- Consumes detections from **`detection-topic`**.  
+- Builds a **graph representation**:  
+  - **Nodes** = detected objects (`vehicle`, `campfire`, `water`).  
+  - **Node features** = `[class_onehot, area, x, y]`.  
+  - **Edges** = based on proximity, weights = **Inverse Distance Weighting (IDW)**.  
+- Processes the graph through a **2-layer Graph Convolutional Network (GCN)**.  
+- Outputs a **poaching risk probability**.  
+- Stores results in **Redis** for the dashboard.  
+
+---
+
+## Dashboard
+- Subscribes to Redis.  
+- Visualizes detections and risk scores.  
+- Provides real-time monitoring for operators.  
+
+---
+
+## Training Details
+- **Loss function**: `BCEWithLogitsLoss` (binary classification: poaching vs. non-poaching).  
+- **Evaluation metrics**:  
+  - Accuracy = 0.87  
+  - Precision = 0.82  
+  - Recall = 0.74  
+  - F1 = 0.78  
+  - AUC = 0.85  
+- **Dataset**: 50 manually labeled images (5 poaching, 45 non-poaching).  
+
+---
+
+## Running the Pipeline
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/diishanbhag/poaching_detection.git
+cd poaching_detection
+
+
+# Start Zookeeper & Kafka
+bin/zookeeper-server-start.sh config/zookeeper.properties
+bin/kafka-server-start.sh config/server.properties
+
+# Start Redis
+redis-server
+# Terminal 1: Run Producer
+python producer.py
+
+# Terminal 2: Run YOLO Service
+python yolo_service.py --weights vehicle.pt wildfire.pt water.pt
+
+# Terminal 3: Run GNN Service
+python gnn_service.py
+
+# Terminal 4: Run Dashboard
+python dashboard.py
+# Terminal 1: Run Producer
+python producer.py
+
+# Terminal 2: Run YOLO Service
+python yolo_service.py --weights vehicle.pt wildfire.pt water.pt
+
+# Terminal 3: Run GNN Service
+python gnn_service.py
+
+# Terminal 4: Run Dashboard
+python dashboard.py
+
+
+
