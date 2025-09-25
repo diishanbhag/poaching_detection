@@ -8,6 +8,13 @@ This project implements a real-time poaching detection system by integrating:
 
 The system analyzes aerial/satellite images and outputs a poaching risk score, with results streamed to a live dashboard.  
 
+<img width="1600" height="731" alt="image" src="https://github.com/user-attachments/assets/6c795bc2-1814-475c-83de-9076189f54ce" />
+<img width="1600" height="480" alt="image" src="https://github.com/user-attachments/assets/8ccf5e0c-1a71-4391-a172-830dff5b0e11" />
+
+<img width="1600" height="769" alt="image" src="https://github.com/user-attachments/assets/d3e00d94-4c0e-479d-8521-3bd30d4807f3" />
+
+
+
 ---
 
 ## System Architecture  
